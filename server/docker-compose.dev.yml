@@ -37,7 +37,32 @@ services:
       - ./ProductService/.env
     networks:
       - backend-network
-
+  cdn-services:
+    build:
+      context: ./CDNService
+      dockerfile: Dockerfile
+    image: cdn-services
+    container_name: cdn-services
+    volumes:
+      - ./CDNService:/app
+    env_file:
+      - ./CDNService/.env
+    networks:
+      - backend-network
+  minio-services:
+    build:
+      context: ./MinioBucket
+      dockerfile: Dockerfile
+    image: minio-services
+    container_name: minio-services
+    env_file:
+      - ./MinioBucket/config/minio.env
+    ports:
+      - 9001:9001
+    volumes:
+      - ./MinioBucket/data:/app/data
+    networks:
+      - backend-network
 networks:
   backend-network:
     driver: bridge
