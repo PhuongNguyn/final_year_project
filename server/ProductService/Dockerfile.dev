@@ -1,0 +1,14 @@
+### Base
+FROM node:16-alpine as base
+
+# Enable Node.js optimisation
+ENV NODE_ENV=development
+RUN mkdir /app
+EXPOSE 8002
+WORKDIR /app
+USER root
+COPY  package.json yarn.lock ./
+RUN yarn
+COPY . .
+
+CMD yarn start:dev

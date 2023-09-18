@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx-gateway
+    tty: true
+    volumes:
+      - ./ApiGateway/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8080:80
+    networks:
+      - backend-network
+    restart: unless-stopped
+  user-services:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    image: user-services
+    container_name: user-services
+    volumes:
+      - ./UserService:/app
+      - /app/node_modules
+    env_file:
+      - ./UserService/.env
+    networks:
+      - backend-network
+  product-services:
+    build:
+      context: ./ProductService
+      dockerfile: Dockerfile
+    image: product-services
+    container_name: product-services
+    volumes:
+      - ./ProductService:/app
+      - /app/node_modules
+    env_file:
+      - ./ProductService/.env
+    networks:
+      - backend-network
+  networks:
+    backend-network:
+      driver: bridge
