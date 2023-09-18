@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package user;
+
+message Role {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Permission {
+  int32 id = 1;
+  string subject = 2;
+  string action = 3;
+}
+
+message User {
+  int32 id = 1;
+  string createdAt = 2;
+  string updatedAt = 3;
+  string fullname = 4;
+  string avatar = 5;
+  string email = 6;
+  string phoneNumber = 7;
+  string address = 8;
+  int32 status = 9;
+  Role role = 10;
+  repeated Permission permission = 11;
+}
+
+message CheckAuthRequest { string token = 1; }
+
+message CheckAuthRespone {
+  string code = 1;
+  string message = 2;
+  bool success = 3;
+  User user = 4;
+}
+service UserService {
+  rpc CheckAuth(CheckAuthRequest) returns (CheckAuthRespone);
+}

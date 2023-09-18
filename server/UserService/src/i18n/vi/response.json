@@ -1,0 +1,14 @@
+{
+  "FAILED_CREATED_USER": "Tạo người dùng thất bại",
+  "SUCCESS_CREATED_USER": "Tạo người dùng thành công",
+  "SUCCESS_UPDATED_USER": "Cập nhật người dùng thành công",
+  "SUCCESS_DELETED_USER": "Xóa người dùng thành công",
+  "NOT_FOUND_USER": "Không tìm thấy user",
+  "WRONG_PASSWORD": "Sai mật khẩu",
+  "LOGIN_SUCCESS": "Đăng nhập thành công",
+  "FAILED_LOGIN": "Đăng nhập thất bại",
+  "PHONENUMBER_USED": "Số điện thoại đã được sử dụng",
+  "EMAIL_USED": "Email đã được sử dụng",
+  "GET_USER_SUCCESS": "Lấy thông tin người dùng thành công",
+  "CREATE_PROMOTION_SUCCESS": "Tạo khuyến mãi thành công"
+}

@@ -1,0 +1,19 @@
+services: 
+  client: 
+    build: 
+      context: ./client
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./client/:/usr/app/
+    ports:
+      - "3002:3000"
+  user-services: 
+    build:  
+      context: ./server/UserService
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./server/UserService/:/usr/app/
+    ports:
+      - "8001:8001"

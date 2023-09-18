@@ -1,0 +1,12 @@
+{
+  "FAILED_CREATED_USER": "Failed to create user",
+  "SUCCESS_CREATED_USER": "Successfully create user",
+  "NOT_FOUND_USER": "Not found user",
+  "WRONG_PASSWORD": "Wrong password",
+  "LOGIN_SUCCESS": "Login success",
+  "FAILED_LOGIN": "Login Failed",
+  "PHONENUMBER_USED": "Phone number is used",
+  "EMAIL_USED": "Email is used",
+  "GET_USER_SUCCESS": "Get user success",
+  "CREATE_PROMOTION_SUCCESS": "Create promotion success"
+}

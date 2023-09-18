@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+package product;
+
+message Category {
+  int32 id = 1;
+  string name = 2;
+  string slug = 3;
+  string content = 4;
+  bool isShow = 5;
+  int32 priority = 6;
+  Category parent = 7;
+  repeated Category children = 8;
+  string createdAt = 9;
+  string updatedAt = 10;
+}
+
+message Warehouse {
+  int32 id = 1;
+  string name = 2;
+  string address = 3;
+  string manager = 4;
+  float iat = 5;
+  float long = 6;
+  string createdAt = 9;
+  string updatedAt = 10;
+}
+
+message Unit {
+  int32 id = 1;
+  string name = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+}
+
+message DetailParemeter {
+  string key = 1;
+  string value = 2;
+}
+
+message Detail {
+  int32 id = 1;
+  int32 liked = 2;
+  int32 view = 3;
+  int32 rate = 4;
+  int32 ordered = 5;
+  repeated DetailParemeter parameter = 6;
+  int32 productId = 7;
+  string createdAt = 8;
+  string updatedAt = 9;
+}
+
+message File {
+  int32 id = 1;
+  string link = 2;
+  string description = 3;
+  string name = 4;
+  string role = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+}
+
+message Price {
+  int32 id = 1;
+  int64 price = 2;
+  int64 basePrice = 3;
+  int64 productId = 4;
+  int64 unitId = 5;
+  Unit unit = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+}
+
+message Quantity {
+  int32 id = 1;
+  int32 quantity = 2;
+  int32 unitId = 3;
+  Unit unit = 4;
+  int32 warehouseId = 5;
+  Warehouse warehouse = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+}
+
+message Product {
+  int32 id = 1;
+  string name = 2;
+  string slug = 3;
+  string description = 4;
+  string content = 5;
+  int32 status = 6;
+  repeated Price price = 7;
+  repeated Quantity quantity = 8;
+  repeated File file = 9;
+  Detail detail = 10;
+  repeated Category category = 11;
+  int64 basePrice = 12;
+  string createdAt = 13;
+  string updatedAt = 14;
+}
+
+message GetProductByIdsRequest { repeated int32 ids = 1; }
+
+message GetProductByIdsRespone {
+  string code = 1;
+  string message = 2;
+  bool success = 3;
+  repeated Product products = 4;
+}
+
+message CheckStockRequest { 
+  int32 productId=1;
+  int32 quantityId=2;
+  int32 quantity=3;
+ }
+
+message CheckStockResponse { 
+  int32 code = 1;
+  string message = 2;
+  bool success = 3;
+  Product product = 4;
+}
+
+
+service ProductService {
+  rpc GetProductByIds(GetProductByIdsRequest) returns (GetProductByIdsRespone);
+  rpc CheckStock(CheckStockRequest) returns (CheckStockResponse);
+}
