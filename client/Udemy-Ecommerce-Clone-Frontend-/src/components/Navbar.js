@@ -1,28 +1,34 @@
 import React from 'react';
 import styled from "styled-components";
-import {MdMenu, MdShoppingCart} from "react-icons/md";
-import {Link} from 'react-router-dom';
+import { MdMenu, MdShoppingCart } from "react-icons/md";
+import { Link } from 'react-router-dom';
 import { useSidebarContext } from '../context/sidebar_context';
 import { useCartContext } from '../context/cart_context';
 
 const Navbar = () => {
-  const {total_items} = useCartContext();
-  const {openSidebar} = useSidebarContext();
+  const { total_items } = useCartContext();
+  const { openSidebar } = useSidebarContext();
 
   return (
-    <NavbarWrapper className = "bg-white flex">
+    <NavbarWrapper className="bg-white flex">
       <div className='container w-100'>
         <div className='brand-and-toggler flex flex-between w-100'>
-          <Link to = "/" className='navbar-brand text-uppercase ls-1 fw-8'>
+          <Link to="/" className='navbar-brand text-uppercase ls-1 fw-8'>
             <span>c</span>oursean
           </Link>
 
-          <div className='navbar-btns flex'>
-            <Link to = "/cart" className='cart-btn'>
+          <div className='navbar-btns flex gap-2'>
+            <Link to="/cart" className='cart-btn'>
               <MdShoppingCart />
               <span className='item-count-badge'>{total_items}</span>
             </Link>
-            <button type = "button" className='sidebar-open-btn' onClick={() => openSidebar()}>
+            <Link to={'/login'}><div className='button-login border-thin-solid-black text-black fw-6 fs-14'>
+              Đăng nhập
+            </div></Link>
+            <Link to={'/sign-up'}><div className='button-sign-up border-thin-solid-black text-white fw-6 fs-14'>
+              Đăng kí
+            </div></Link>
+            <button type="button" className='sidebar-open-btn' onClick={() => openSidebar()}>
               <MdMenu />
             </button>
           </div>
@@ -46,6 +52,8 @@ const NavbarWrapper = styled.nav`
     margin-right: 18px;
     font-size: 23px;
     position: relative;
+    display: flex;
+    align-items:center;
     .item-count-badge{
       background-color: var(--clr-orange);
       position: absolute;
@@ -65,6 +73,8 @@ const NavbarWrapper = styled.nav`
   }
 
   .sidebar-open-btn{
+    display: flex;
+    align-items:center;
     transition: all 300ms ease-in-out;
     &:hover{
       opacity: 0.7;
