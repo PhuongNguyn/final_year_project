@@ -1,5 +1,6 @@
 import { useState } from "react"
 import InputWithFloatLabel from "../components/Form/InputWithFloatLabel"
+import { Link } from "react-router-dom"
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -27,11 +28,13 @@ const Login = () => {
                         <InputWithFloatLabel label={'Password'} onChange={handleChangePassword} value={password} />
                     </div>
                     <div className="mt-2">
-                        <div className="login-sign-up-button">
+                        <button type="submit" className="login-sign-up-button">
                             Đăng nhập
-                        </div>
+                        </button>
                     </div>
                 </form>
+                <hr className="mt-4" />
+                <p className="login-note mt-4 fw-4 text-center">Bạn không có tài khoản? Hãy <span className="redirect-to-sign-up"><Link to={'/sign-up'}>đăng ký</Link></span></p>
             </div>
         </div>
     )
