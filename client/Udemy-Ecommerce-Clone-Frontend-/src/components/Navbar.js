@@ -4,10 +4,21 @@ import { MdMenu, MdShoppingCart } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { useSidebarContext } from '../context/sidebar_context';
 import { useCartContext } from '../context/cart_context';
+import { Avatar } from '@chakra-ui/react'
+import { useDispatch, useSelector } from 'react-redux';
+import { DEFAULT_AVATAR } from '../utils/constants';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { logout } from '../redux/slice/user.slice';
 
 const Navbar = () => {
   const { total_items } = useCartContext();
   const { openSidebar } = useSidebarContext();
+  const { user } = useSelector(state => state.users)
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
   return (
     <NavbarWrapper className="bg-white flex">
@@ -22,19 +33,24 @@ const Navbar = () => {
               <MdShoppingCart />
               <span className='item-count-badge'>{total_items}</span>
             </Link>
-            <Link to={'/login'}><div className='button-login border-thin-solid-black text-black fw-6 fs-14'>
+            {!user && <Link to={'/login'}><div className='button-login border-thin-solid-black text-black fw-6 fs-14'>
               Đăng nhập
-            </div></Link>
-            <Link to={'/sign-up'}><div className='button-sign-up border-thin-solid-black text-white fw-6 fs-14'>
+            </div></Link>}
+            {!user && <Link to={'/sign-up'}><div className='button-sign-up border-thin-solid-black text-white fw-6 fs-14'>
               Đăng kí
-            </div></Link>
+            </div></Link>}
+            {user && <Menu><MenuButton fontSize={'12px'}><Avatar src={user.avatar || DEFAULT_AVATAR} /></MenuButton><MenuList>
+              <MenuItem><Link to={'/user-profile'} style={{ fontSize: '15px', cursor: 'pointer' }}>User Profile</Link></MenuItem>
+              <MenuItem><Link to={'/#'} style={{ fontSize: '15px', cursor: 'pointer' }}>My Learning</Link></MenuItem>
+              <MenuItem style={{ fontSize: '15px', cursor: 'pointer' }} onClick={handleLogout}>Log out</MenuItem>
+            </MenuList></Menu>}
             <button type="button" className='sidebar-open-btn' onClick={() => openSidebar()}>
               <MdMenu />
             </button>
           </div>
         </div>
       </div>
-    </NavbarWrapper>
+    </NavbarWrapper >
   )
 }
 

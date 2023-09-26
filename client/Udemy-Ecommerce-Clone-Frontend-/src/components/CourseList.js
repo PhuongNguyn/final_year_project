@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Tabs from "./Tabs";
 import { useCoursesContext } from '../context/courses_context';
 
-const CourseList = () => {
-  const {courses} = useCoursesContext();
+const CourseList = ({ categories }) => {
+  const { courses } = useCoursesContext();
 
   return (
     <CoursesListWrapper>
@@ -14,7 +14,7 @@ const CourseList = () => {
           <p>Choose from 204,000 online video courses with new additions publihsed every month</p>
         </div>
 
-        <Tabs courses = {courses} />
+        <Tabs categories={categories} />
       </div>
     </CoursesListWrapper>
   )

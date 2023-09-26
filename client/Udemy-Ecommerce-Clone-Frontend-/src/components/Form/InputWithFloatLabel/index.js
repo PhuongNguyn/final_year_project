@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 
 
-const InputWithFloatLabel = ({ label, onChange, value = "" }) => {
+const InputWithFloatLabel = ({ label, onChange, value = "", type = "text" }) => {
     const labelRef = useRef()
     const inputRef = useRef()
 
@@ -29,7 +29,7 @@ const InputWithFloatLabel = ({ label, onChange, value = "" }) => {
                 {label}
             </label>
             <div className="input-with-float-label-border">
-                <input ref={inputRef} onBlur={handleFocusOut} onFocus={handleFocusInput} onChange={onChange} value={value} />
+                <input type={type} ref={inputRef} onBlur={handleFocusOut} onFocus={handleFocusInput} onChange={onChange} value={value} />
             </div>
         </div>
     )

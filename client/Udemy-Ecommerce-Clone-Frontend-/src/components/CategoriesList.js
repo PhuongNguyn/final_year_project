@@ -5,7 +5,7 @@ import Category from "./Category";
 import { useCoursesContext } from '../context/courses_context';
 
 const CategoriesList = () => {
-  const {categories} = useCoursesContext();
+  const { categories } = useCoursesContext();
   return (
     <CategoriesListWrapper>
       <div className='container'>
@@ -16,7 +16,7 @@ const CategoriesList = () => {
           {
             categories.map((category, idx) => {
               return (
-                <Category image = {categories_images[idx]} category = {category} key = {idx} />
+                <Category image={categories_images[idx]} category={category} key={idx} />
               )
             })
           }

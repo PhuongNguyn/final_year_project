@@ -765,3 +765,8 @@ select {
     text-decoration: underline;
     text-align: center;
 }
+
+.tab-btn-active {
+    background-color: var(--clr-black);
+    color: var(--clr-white);
+}

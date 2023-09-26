@@ -1,9 +1,7 @@
 import axios from "axios";
 
 import config from "../config";
-import { createStandaloneToast } from "@chakra-ui/react";
 
-const toast = createStandaloneToast();
 const instance = axios.create({
     baseURL: config.API_URL,
 });
@@ -25,14 +23,9 @@ export default class APIService {
             (response) => response,
             (error) => {
                 if (
-                    error.response.status === 401 &&
-                    location.pathname !== "/login"
+                    error.response?.status === 401
                 ) {
-                    toast({
-                        title: "Phiên đăng nhập hết hạn!",
-                        status: "error",
-                        position: "top",
-                    });
+
                     localStorage.removeItem("userData");
                     localStorage.removeItem("accessToken");
                 }
@@ -43,12 +36,23 @@ export default class APIService {
     }
 
     getToken() {
-        return JSON.parse(localStorage.getItem("accessToken"));
+        return JSON.parse(localStorage.getItem("accessToken") != undefined ? localStorage.getItem("accessToken") : "null");
     }
 
     setToken(value) {
         localStorage.setItem("accessToken", value);
     }
 
+    login(data) {
+        return instance.post('/auth/users/login', data)
+    }
 
+    signUp(data) {
+        return instance.post('/auth/users/register', data)
+    }
+
+    // categories
+    async getCategoryHome() {
+        return instance.get('/products/categories/getCateHome')
+    }
 }
