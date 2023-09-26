@@ -102,7 +102,7 @@ export class CategoryService extends BaseService<Category> {
         return { success: false, message: 'Chuyên mục đã tồn tại!' };
       }
 
-      const result = this.categoryReponsitory.create(data);
+      const result = this.categoryReponsitory.create({ ...data, isShow: data.isShow == "true" ? true : false });
       await this.categoryReponsitory.save(result);
       return { success: true, result, message: 'Tạo chuyên mục thành công!' };
     } catch (error) {
@@ -111,7 +111,7 @@ export class CategoryService extends BaseService<Category> {
   }
   async updateCategory(id: number, updateData: UpdateDTO) {
     try {
-      const result = await this.categoryReponsitory.update(id, updateData);
+      const result = await this.categoryReponsitory.update(id, { ...updateData, isShow: updateData.isShow == "true" ? true : false });
 
       if (result.affected !== 0) {
         return {
@@ -155,21 +155,8 @@ export class CategoryService extends BaseService<Category> {
           isShow: true,
         },
       });
-      const listCateProduct =
-        await this.productService.getPagingProductByCateId(
-          listCateHome?.map((item) => item.id),
-          5,
-          1,
-        );
-      const finalResult = listCateHome.map((item) => {
-        return {
-          ...item,
-          product: listCateProduct.find(
-            (itemProduct) => itemProduct.cateId === item.id,
-          )?.productList,
-        };
-      });
-      return finalResult;
+
+      return listCateHome;
     } catch (error) {
       throw error.message;
     }

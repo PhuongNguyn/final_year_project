@@ -22,7 +22,7 @@ import { AuthModule } from './modules/AuthModule/auth.module';
       password: process.env.POSTGRES_PWD,
       database: process.env.POSTGRES_DB,
       entities: [UserEntity],
-      synchronize: false,
+      synchronize: true,
       logging: true,
       autoLoadEntities: true,
     }),

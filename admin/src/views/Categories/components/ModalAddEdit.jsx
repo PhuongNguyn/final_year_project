@@ -111,9 +111,10 @@ const ModalAddEdit = ({ onClose, isOpen }) => {
             selectedCategory
               ? { ...selectedCategory, parent: selectedCategory.parent?.id }
               : {
-                  name: "",
-                  slug: "",
-                }
+                name: "",
+                slug: "",
+                isShow: false
+              }
           }
           validationSchema={createCateValidationSchema}
           onSubmit={handleSubmit}
@@ -222,6 +223,36 @@ const ModalAddEdit = ({ onClose, isOpen }) => {
                         )}
                       </Field>
                     </Stack>
+                  </Stack>
+                  <Stack direction="row" spacing={{ sm: "24px", lg: "30px" }} mt={'12px'} >
+                    <Field name="isShow">
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={form.errors.slug && form.touched.slug}
+                        >
+                          <FormLabel
+                            fontWeight="semibold"
+                            fontSize="xs"
+                            mb="10px"
+                          >
+                            Show trang chủ
+                          </FormLabel>
+                          <Select
+                            {...field}
+                            borderRadius="15px"
+                            color="gray.400"
+                            fontSize="sm"
+                            defaultValue={false}
+                          >
+                            <option value={false}>Không</option>
+                            <option value={true}>Có</option>
+                          </Select>
+                          <FormErrorMessage>
+                            {form.errors.isShow}
+                          </FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
                   </Stack>
                 </ModalBody>
                 <ModalFooter gap={3}>

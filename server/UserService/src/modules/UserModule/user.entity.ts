@@ -35,13 +35,13 @@ export class UserEntity extends BaseEntity {
   })
   avatar: string;
 
-  @Column({ type: String, nullable: false, unique: true })
+  @Column({ type: String, nullable: true, unique: true })
   email: string;
 
   @Column({ type: String, nullable: false, unique: true })
   phoneNumber: string;
 
-  @Column({ type: String, nullable: false })
+  @Column({ type: String, nullable: true })
   address: string;
 
   @Column({ type: String, nullable: false, select: false })

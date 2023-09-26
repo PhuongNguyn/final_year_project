@@ -9,10 +9,4 @@ export class RegisterDTO {
 
   @IsNotEmpty({ message: 'Số điện thoại người dùng không được bỏ trống' })
   phoneNumber: string;
-
-  @IsNotEmpty({ message: 'Địa chỉ người dùng không được bỏ trống' })
-  address: string;
-
-  @IsNotEmpty({ message: 'Email người dùng không được bỏ trống' })
-  email: string;
 }

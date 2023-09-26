@@ -167,16 +167,7 @@ export class UserService extends BaseService<UserEntity> {
         );
       }
 
-      const checkUserEmail = await this.userEntity.findOneBy({
-        email: data.email,
-      });
 
-      if (checkUserEmail) {
-        throw new HttpException(
-          this.i18n.t('response.EMAIL_USED'),
-          HttpStatus.BAD_REQUEST,
-        );
-      }
       const findCustomerRole = await this.roleServive.getRoleByName(
         role.CUSTOMER,
       );
@@ -187,6 +178,7 @@ export class UserService extends BaseService<UserEntity> {
         role: findCustomerRole,
       };
       const user = this.userEntity.create(dataToCreate);
+      console.log(user)
       const returnUser = await this.userEntity.save(user, {
         reload: true,
       });

@@ -7,4 +7,6 @@ export class CreateCategoryDTO {
 
   @IsNotEmpty({ message: 'Slug không được để trống' })
   slug: string;
+
+  isShow: string
 }
