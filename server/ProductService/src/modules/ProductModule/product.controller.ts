@@ -25,7 +25,7 @@ export class ProductController {
   constructor(
     private readonly productService: ProductService,
     private readonly i18n: I18nService,
-  ) {}
+  ) { }
 
   @Get('/')
   @Authorization('product', actionEnum.READ)
@@ -159,10 +159,8 @@ export class ProductController {
   @Delete('/:id')
   async delete(@Param('id') id: number) {
     try {
-      const result = await this.productService.delete(id);
       return Response({
         statusCode: RESPONSE_STATUS.SUCCESS,
-        result: result,
       });
     } catch (error) {
       return Response({

@@ -8,23 +8,17 @@ import {
   SELECT_PAGING_PRODUCT_CONSTANT,
   SELECT_SINGLE_PRODUCT_CONSTANT,
 } from 'src/constant/global.constant';
-import { ProductQuantityService } from '../ProductQuantityModule/productQuantity.service';
-import { ProductFileService } from '../ProductFile/productFile.service';
 import { ProductDetailService } from '../ProductDetail/productDetail.service';
 import { CategoryService } from '../CategoryModule/categories.service';
 import { IPlaceOrderInterface } from './product.interface';
-import { ProductPriceService } from '../ProductPriceModule/productPrice.service';
 @Injectable()
 export class ProductService extends BaseService<Product> {
   constructor(
     @InjectRepository(Product)
     private readonly productReponsitory: Repository<Product>,
-    private readonly quantityService: ProductQuantityService,
-    private readonly fileService: ProductFileService,
     private readonly detailService: ProductDetailService,
     @Inject(forwardRef(() => CategoryService))
     private readonly cateService: CategoryService,
-    private readonly priceService: ProductPriceService,
   ) {
     super(productReponsitory);
   }
@@ -186,129 +180,19 @@ export class ProductService extends BaseService<Product> {
   }
 
   async getById(id: number) {
-    try {
-      const data = await this.productReponsitory.findOne({
-        where: { id },
-        relations: [
-          'category',
-          'quantity',
-          'quantity.unit',
-          'quantity.warehouse',
-          'file',
-          'detail',
-        ],
-        select: SELECT_SINGLE_PRODUCT_CONSTANT,
-      });
-      if (data) {
-        await this.detailService.updateView(data?.id, data?.detail?.view + 1);
-      }
-      return data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+
   }
 
   async getBySlug(slug: string) {
-    try {
-      const data = await this.productReponsitory.findOne({
-        where: { slug },
-        relations: [
-          'category',
-          'price',
-          'price.unit',
-          'quantity',
-          'quantity.unit',
-          'quantity.warehouse',
-          'file',
-          'detail',
-        ],
-        select: SELECT_SINGLE_PRODUCT_CONSTANT,
-      });
-      await this.detailService.updateView(data.id, data?.detail?.view + 1);
-      return data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+
   }
 
   async create(data: CreateProductDTO) {
-    try {
-      const checkExists = await this.productReponsitory.findOne({
-        where: [{ name: data?.name }, { slug: data?.slug }],
-      });
 
-      if (checkExists) {
-        return { success: false, message: 'Sản phẩm đã tồn tại!' };
-      }
-
-      const result = this.productReponsitory.create({
-        name: data.name,
-        description: data.description,
-        slug: data.slug,
-        content: data.content,
-        category: data.category.map((item) => {
-          return {
-            id: item,
-          };
-        }),
-      });
-      const newProduct = await this.productReponsitory.save(result);
-
-      const files = await this.fileService.createFile(
-        data.files,
-        newProduct.id,
-      );
-
-      const quantity = await this.priceService.createProductPrice(
-        newProduct.id,
-        data.priceList,
-      );
-
-      return {
-        success: true,
-        result,
-        message: 'Tạo sản phẩm thành công!',
-      };
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
   }
 
   async update(id: number, data: UpdateProductDTO) {
-    try {
-      const { price, quantity, file, detail, ...product } = { ...data };
 
-      if (quantity?.length > 0) {
-        await this.quantityService.createOrUpdateQuantity(id, quantity);
-      }
-      if (file?.length > 0) {
-        await this.fileService.createOrUpdateFile(id, file);
-      }
-      if (detail) {
-        await this.detailService.createOrUpdateDetails(id, detail);
-      }
-      await this.productReponsitory.update(id, product);
-      return {
-        success: true,
-        message: 'Cập nhật sản phẩm thành công!',
-        result: await this.productReponsitory.findOne({ where: { id } }),
-      };
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
-  async delete(id: number) {
-    try {
-      return this.productReponsitory.delete(id);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
   }
 
   async getByCategorySlug({
@@ -327,7 +211,6 @@ export class ProductService extends BaseService<Product> {
         skip: pageSize * pageIndex - pageSize,
         take: pageSize,
         order: { createdAt: 'DESC' },
-        relations: { file: true },
       });
       const count = await this.productReponsitory.count({
         where: { category: { id: In(category.map((cate) => cate.id)) } },
@@ -400,36 +283,7 @@ export class ProductService extends BaseService<Product> {
   }
 
   async placeOrder(data: IPlaceOrderInterface[]) {
-    try {
-      const checkSuccess = await Promise.all(
-        data?.map(async (item) => {
-          if (!item.productId || !item.quantity) {
-            return { success: false, code: -1, product: {} };
-          }
-          const result = await this.checkStock({
-            productId: item.productId,
-            quantityId: item.quantityId,
-            quantity: item.quantity,
-          });
-          return result;
-        }),
-      );
-      if (checkSuccess.find((item) => !item.success)) {
-        return { success: false, code: 0, message: 'Cập nhật lại giỏ hàng!' };
-      } else {
-        await Promise.all(
-          data?.map(async (item) => {
-            await this.quantityService.subtractOrPlusQuantity(
-              item.quantityId,
-              -item.quantity,
-            );
-          }),
-        );
-      }
-    } catch (error) {
-      console.log(error);
-      return { success: false, code: -1, message: error.message };
-    }
+
   }
 
   async getPagingProductByCateId(cateId, pageSize = 5, pageIndex = 1) {
@@ -441,20 +295,10 @@ export class ProductService extends BaseService<Product> {
             skip: pageSize * pageIndex - pageSize,
             take: pageSize,
             order: { createdAt: 'DESC' },
-            relations: {
-              category: true,
-              file: true,
-              detail: true,
-              // price: true,
-              price: { unit: true },
-            },
-            //  ['category', 'file', 'detail','price'],
-            select: SELECT_PAGING_PRODUCT_CONSTANT,
           });
           return { cateId: itemCate, productList: productList };
         }),
       );
-      console.log(data, 'jaskdjaskldjas');
       return data;
     } catch (error) {
       return [];

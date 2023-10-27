@@ -27,6 +27,12 @@ export class ProductDetail extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: String })
+  name: string;
+
+  @Column({ type: String })
+  videoUrl: string
+
   @Column({ type: Number, default: 0 })
   liked: number;
 
@@ -39,28 +45,11 @@ export class ProductDetail extends BaseEntity {
   @Column({ type: Number, default: 0 })
   ordered: number;
 
-  @Column({
-    type: 'json',
-    nullable: true,
-    transformer: {
-      to(value: dataType[]): string {
-        return JSON.stringify(value);
-      },
-      from(value: string): dataType[] {
-        return JSON.parse(value);
-      },
-    },
-  })
-  parameter?: { key: string; value: string }[];
-
-  @OneToOne((type) => Product, (product) => product.detail, {
+  @ManyToOne((type) => Product, (product) => product.id, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'productId' })
+  @JoinColumn({ name: 'product' })
   product: Product;
-
-  @Column({ type: Number })
-  productId: number;
 
   @CreateDateColumn()
   createdAt: Date;

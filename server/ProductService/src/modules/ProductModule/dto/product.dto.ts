@@ -1,5 +1,4 @@
 import { IsNotEmpty } from 'class-validator';
-import { fileRole } from 'src/modules/ProductFile/productFile.entity';
 // import { promotionType } from '../promotion.entity';
 
 export class CreateProductDTO {
@@ -11,7 +10,6 @@ export class CreateProductDTO {
   description: string;
   content: string;
   category: number[];
-  files: { image: string; type: fileRole }[];
   priceList: {
     unit: number;
     price: number;

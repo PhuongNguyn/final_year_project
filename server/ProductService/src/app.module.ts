@@ -11,11 +11,7 @@ import { Promotion } from './modules/Promotion/promotion.entity';
 import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './modules/CategoryModule/categories.module';
 import { Category } from './modules/CategoryModule/categories.entity';
-import { UnitModule } from './modules/Unit/unit.module';
-import { WarehouseModule } from './modules/WarehouseModule/warehouse.module';
 import { ProductModule } from './modules/ProductModule/product.module';
-import { ProductQuantityModule } from './modules/ProductQuantityModule/productQuantity.module';
-import { ProductFileModule } from './modules/ProductFile/productFile.module';
 import { ProductDetailModule } from './modules/ProductDetail/productDetail.module';
 import { AuthModule } from './modules/Auth/Auth.module';
 
@@ -46,13 +42,9 @@ import { AuthModule } from './modules/Auth/Auth.module';
       ],
     }),
     CategoryModule,
-    UnitModule,
-    WarehouseModule,
     ProductModule,
-    ProductQuantityModule,
-    ProductFileModule,
     ProductDetailModule,
     AuthModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

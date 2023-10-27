@@ -33,6 +33,8 @@ const Kanban = lazy(() => import("./views/Applications/Kanban/index"));
 const Wizard = lazy(() => import("./views/Applications/Wizard/index"));
 
 import SignInIllustration from "./views/Authentication/SignIn/SignInIllustration";
+import Product from "./views/Product";
+import ProductDetail from "./views/ProductDetail";
 
 const CRM = lazy(() => import("./views/Dashboard/CRM"));
 const Default = lazy(() => import("./views/Dashboard/Default"));
@@ -56,13 +58,8 @@ const General = lazy(() => import("./views/Pages/Projects/General/index"));
 const Timeline = lazy(() => import("./views/Pages/Projects/Timeline/index"));
 const Reports = lazy(() => import("./views/Pages/Users/Reports/index"));
 const Widgets = lazy(() => import("./views/Pages/Widgets/index"));
-const NewProduct = lazy(() => import("./views/Products/NewProduct/index"));
 const Roles = lazy(() => import("./views/Roles"));
 const Categories = lazy(() => import("./views/Categories"));
-const ProductPage = lazy(() => import("./views/Products/ProductPage"));
-const Unit = lazy(() => import("./views/Ecommerce/Products/Unit"));
-const EditProduct = lazy(() => import("./views/Products/EditProduct"));
-const Warehouse = lazy(() => import("./views/Warehouse"))
 
 const dashRoutes = [
   {
@@ -112,12 +109,18 @@ const dashRoutes = [
     collapse: true,
     icon: <GiSadCrab color="inherit" />,
     items: [
-      // {
-      //   name: "Sản phẩm",
-      //   path: "/products/products-list",
-      //   component: ProductPage,
-      //   layout: "/admin",
-      // },
+      {
+        name: "Khoá học",
+        path: "/products/products-list",
+        component: Product,
+        layout: "/admin",
+      },
+      {
+        name: "Bài học",
+        path: "/products/products-detail",
+        component: ProductDetail,
+        layout: "/admin",
+      },
       {
         name: "Danh mục",
         path: "/products/categories-list",
@@ -130,20 +133,6 @@ const dashRoutes = [
       //   component: Unit,
       //   layout: "/admin",
       // },
-      {
-        name: "Thêm mới sản phẩm",
-        component: NewProduct,
-        path: "/products/new-product",
-        layout: "/admin",
-        invisible: true,
-      },
-      {
-        name: "Cập nhật sản phẩm",
-        component: EditProduct,
-        path: "/products/edit/:id",
-        layout: "/admin",
-        invisible: true,
-      },
     ],
   },
   // {

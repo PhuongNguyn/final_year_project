@@ -19,13 +19,13 @@ export class ProductDetailService extends BaseService<ProductDetail> {
       await this.detailReponsitory.upsert({ ...data, productId }, [
         'productId',
       ]);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async updateView(productId: number, view: number) {
     const data = await this.detailReponsitory.upsert(
       {
-        productId: productId,
+        product: { id: productId },
         view: !isNaN(view) ? view : 1,
       },
       ['productId'],
@@ -35,7 +35,7 @@ export class ProductDetailService extends BaseService<ProductDetail> {
   async updateLiked(productId: number, liked: number) {
     const data = await this.detailReponsitory.upsert(
       {
-        productId: productId,
+        product: { id: productId },
         liked: !isNaN(liked) ? liked : 1,
       },
       ['productId'],
@@ -45,7 +45,7 @@ export class ProductDetailService extends BaseService<ProductDetail> {
   async updateRated(productId: number, rated: number) {
     const data = await this.detailReponsitory.upsert(
       {
-        productId: productId,
+        product: { id: productId },
         rated: !isNaN(rated) ? rated : 1,
       },
       ['productId'],
@@ -54,7 +54,7 @@ export class ProductDetailService extends BaseService<ProductDetail> {
   async updateOrdered(productId: number, ordered: number) {
     const data = await this.detailReponsitory.upsert(
       {
-        productId: productId,
+        product: { id: productId },
         ordered: !isNaN(ordered) ? ordered : 1,
       },
       ['productId'],

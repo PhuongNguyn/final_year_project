@@ -14,11 +14,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../CategoryModule/categories.entity';
-import { ProductQuantity } from '../ProductQuantityModule/productQuantity.entity';
-import { ProductFile } from '../ProductFile/productFile.entity';
 import { ProductDetail } from '../ProductDetail/productDetail.entity';
 import * as moment from 'moment';
-import { ProductPrice } from '../ProductPriceModule/productPrice.entity';
 
 export type productStatusType = 0 | 1 | -1;
 // '-1': 'Không hiển thị!',
@@ -42,22 +39,11 @@ export class Product extends BaseEntity {
   @Column({ type: String })
   content: string;
 
-  @OneToMany(() => ProductPrice, (price) => price.product)
-  @JoinColumn()
-  price: ProductPrice[];
+  @Column({ type: Number })
+  price: number;
 
-  @Column({ type: Number, default: 0 })
-  status: productStatusType; //
-
-  @OneToMany(() => ProductFile, (productFile) => productFile.product, {
-    cascade: true,
-  })
-  file: ProductFile[];
-
-  @OneToOne(() => ProductDetail, (detail) => detail.product, {
-    cascade: true,
-  })
-  detail: ProductDetail;
+  @Column({ type: String })
+  thumbnail: string;
 
   @ManyToMany(() => Category, (cate) => cate.products)
   @JoinTable({ name: 'product_category' })
@@ -67,7 +53,7 @@ export class Product extends BaseEntity {
     type: 'timestamptz',
   })
   createdAt: Date;
-
+ 
   @UpdateDateColumn({
     type: 'timestamptz',
   })
