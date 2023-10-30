@@ -262,6 +262,7 @@ const TableProduct = ({
                                             <Tr {...row.getRowProps()} key={index}>
                                                 {row.cells.map((cell, index) => {
                                                     let data = "";
+                                                    console.log(cell)
 
                                                     if (cell.column.id === "isShow") {
                                                         data = (
@@ -298,12 +299,12 @@ const TableProduct = ({
                                                                 <Text>{cell.value}</Text>
                                                             </Flex>
                                                         );
-                                                    } else if (cell.column.id === "name") {
+                                                    } else if (cell.column.id === "title") {
                                                         data = <Text>{cell.value}</Text>;
                                                     } else if (cell.column.id === "slug") {
                                                         data = <Text>{cell.value}</Text>;
-                                                    } else if (cell.column.id === "parent") {
-                                                        data = <Text>{cell.value?.name}</Text>;
+                                                    } else if (cell.column.id === "category") {
+                                                        data = <Text>{cell.value?.map(item => item.name).toString()}</Text>;
                                                     } else if (cell.column.id === "createdAt") {
                                                         data = (
                                                             <Text>

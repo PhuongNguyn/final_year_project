@@ -131,6 +131,10 @@ export default class APIService {
     return instance.delete(`/products/categories/${id}`);
   }
 
+  createProduct(data) {
+    return instance.post(`/products/product`, data)
+  }
+
   getProducts(pageSize = 10, pageIndex = 1, search = "") {
     return instance.get(
       `/products/product?pageSize=${pageSize}&pageIndex=${pageIndex}&search=${search}`

@@ -93,14 +93,6 @@ const SingleUpload = ({ setFieldValue, backgroundImage, ...props }) => {
                 spacing="4"
               >
                 <Box height="28" width="28" position="relative">
-                  {/* <PreviewImage
-                variants={first}
-                backgroundImage="url('https://image.shutterstock.com/image-photo/paella-traditional-classic-spanish-seafood-600w-1662253543.jpg')"
-              /> */}
-                  {/* <PreviewImage
-                variants={second}
-                backgroundImage="url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2628&q=80')"
-              /> */}
                   {loading ? (
                     <Spinner />
                   ) : (

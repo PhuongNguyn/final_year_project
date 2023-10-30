@@ -127,12 +127,15 @@ export class ProductController {
   @Post('/')
   async create(@Body() body: CreateProductDTO) {
     try {
+      console.log(body)
       const result = await this.productService.create(body);
+      console.log(result)
       return Response({
         statusCode: RESPONSE_STATUS.SUCCESS,
         result: result,
       });
     } catch (error) {
+      console.log(error)
       return Response({
         statusCode: RESPONSE_STATUS.FAILED,
         message: error,

@@ -44,7 +44,7 @@ export class ProductService extends BaseService<Product> {
         where: { ...searchQuery },
         skip: pageSize * pageIndex - pageSize,
         take: pageSize,
-        relations: ['category', 'file'],
+        relations: ['category'],
         order: {
           createdAt: 'DESC',
         },
@@ -94,7 +94,7 @@ export class ProductService extends BaseService<Product> {
         where: { ...searchQuery },
         skip: pageSize * pageIndex - pageSize,
         take: pageSize,
-        relations: ['category', 'price', 'price.unit', 'file'],
+        relations: ['category', 'price', 'price.unit'],
         order: {
           createdAt: 'DESC',
         },
@@ -147,7 +147,7 @@ export class ProductService extends BaseService<Product> {
         where: { ...searchQuery },
         skip: pageSize * pageIndex - pageSize,
         take: pageSize,
-        relations: ['category', 'price', 'price.unit', 'file'],
+        relations: ['category', 'price', 'price.unit'],
         order: {
           createdAt: 'DESC',
         },
@@ -189,6 +189,15 @@ export class ProductService extends BaseService<Product> {
 
   async create(data: CreateProductDTO) {
 
+    const newProduct = this.productReponsitory.create({
+      ...data, category: [{ id: data.category }]
+    })
+    try {
+      await newProduct.save()
+      return newProduct
+    } catch (error) {
+      throw error
+    }
   }
 
   async update(id: number, data: UpdateProductDTO) {
@@ -241,7 +250,6 @@ export class ProductService extends BaseService<Product> {
           'quantity',
           'quantity.unit',
           'quantity.warehouse',
-          'file',
           'detail',
         ],
       });

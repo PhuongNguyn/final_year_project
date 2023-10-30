@@ -4,7 +4,7 @@ apps:
     autorestart: true
     env:
       PORT: 8009
-      BASE_URL: "http://minio-services:9000"
+      BASE_URL: "http://localhost:9000"
       BASE_BUCKET: "learnit"
       MINIO_HOST: "minio-services"
       MINIO_KEY: "9IPGLvnfDz2YkuZWl4sn"

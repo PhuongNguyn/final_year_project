@@ -48,12 +48,11 @@ export const SELECT_SINGLE_PRODUCT_CONSTANT = {
 
 export const SELECT_PAGING_PRODUCT_CONSTANT = {
   id: true,
-  name: true,
+  title: true,
   slug: true,
   description: true,
-  status: true,
   createdAt: true,
   updatedAt: true,
   category: SELECT_SINGLE_CATEGORY,
-  file: SELECT_SINGLE_FILE,
+  thumbnail: true,
 };

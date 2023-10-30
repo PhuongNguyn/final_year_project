@@ -3,30 +3,15 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateProductDTO {
   @IsNotEmpty({ message: 'Tên không được để trống!' })
-  name: string;
+  title: string;
   @IsNotEmpty({ message: 'Slug không được để trống!' })
   slug: string;
   @IsNotEmpty({ message: 'Mô tả không được để trống!' })
   description: string;
-  content: string;
-  category: number[];
-  priceList: {
-    unit: number;
-    price: number;
-    fakePrice: number;
-  }[];
-  //OPTIONAL
-  // price?: [{ price: number; unitId: number; id: number }];
-  // quantity?: [{ quantity: number; unitId: number; id: number }];
-  // file?: [{ link: string; name: string; role: string; description: string }];
-  // detail: {
-  //   parameter: [
-  //     {
-  //       key: string;
-  //       value: string;
-  //     },
-  //   ];
-  // };
+  category: number;
+  price: number;
+  fakePrice: number
+  thumbnail: string
 }
 
 export class UpdateProductDTO {

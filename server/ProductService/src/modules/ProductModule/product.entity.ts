@@ -28,16 +28,13 @@ export class Product extends BaseEntity {
   id: number;
 
   @Column({ type: String })
-  name: string;
+  title: string;
 
   @Column({ type: String, unique: true })
   slug: string;
 
   @Column({ type: String })
   description: string;
-
-  @Column({ type: String })
-  content: string;
 
   @Column({ type: Number })
   price: number;
@@ -49,11 +46,14 @@ export class Product extends BaseEntity {
   @JoinTable({ name: 'product_category' })
   category: Category[];
 
+  @Column({ type: Number })
+  fakePrice: number;
+
   @CreateDateColumn({
     type: 'timestamptz',
   })
   createdAt: Date;
- 
+
   @UpdateDateColumn({
     type: 'timestamptz',
   })

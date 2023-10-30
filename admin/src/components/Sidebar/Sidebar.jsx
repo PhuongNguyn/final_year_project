@@ -300,8 +300,8 @@ function Sidebar(props) {
                     prop.icon
                       ? null
                       : sidebarWidth === 275
-                      ? null
-                      : "translateX(-70%)"
+                        ? null
+                        : "translateX(-70%)"
                   }
                 />
               </AccordionButton>
@@ -445,14 +445,8 @@ function Sidebar(props) {
         alignItems="center"
         fontSize="11px"
       >
-        <Image
-          src="/logo.png"
-          w={sidebarWidth === 275 ? "32px" : "40px"}
-          h={sidebarWidth === 275 ? "32px" : "40px"}
-          me="10px"
-        />
         <Text
-          fontSize="xs"
+          fontSize="xl"
           mt="3px"
           display={sidebarWidth === 275 ? "block" : "none"}
         >

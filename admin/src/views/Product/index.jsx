@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 const column = [
     { Header: "ID", accessor: "id", enableSorting: true },
-    { Header: "Tiêu đề", accessor: "name", enableSorting: true },
+    { Header: "Tiêu đề", accessor: "title", enableSorting: true },
     { Header: "Đường dẫn tĩnh", accessor: "slug", enableSorting: true },
     { Header: "Danh mục", accessor: "category", enableSorting: true },
     { Header: "Ngày tạo", accessor: "createdAt", enableSorting: true },

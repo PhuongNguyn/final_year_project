@@ -143,7 +143,7 @@ export default function Dashboard(props) {
       >
         <Sidebar
           routes={routes}
-          logoText={"Cuabien.vn"}
+          logoText={"Coursean"}
           display="none"
           sidebarVariant={sidebarVariant}
           {...rest}
@@ -158,7 +158,7 @@ export default function Dashboard(props) {
           <Portal>
             <AdminNavbar
               onOpen={onOpen}
-              logoText={"Cuabien.vn"}
+              logoText={"Coursean"}
               brandText={getActiveRoute(routes)}
               secondary={getActiveNavbar(routes)}
               fixed={fixed}

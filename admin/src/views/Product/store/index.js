@@ -7,7 +7,7 @@ export const getProducts = createAsyncThunk(
     "products/getProducts",
     async (params) => {
         const { pageSize, pageIndex, search } = params;
-        const res = await api.getCategories(pageSize, pageIndex, search);
+        const res = await api.getProducts(pageSize, pageIndex, search);
 
         return { result: res.data.result, params };
     }
@@ -61,10 +61,10 @@ const productSlice = createSlice({
     },
     extraReducers: {
         [getAllProduct.fulfilled]: (state, action) => {
-            state.allCategory = action.payload
+            state.allProducts = action.payload
         },
         [getAllProduct.rejected]: (state, _) => {
-            state.allCategory = []
+            state.allProducts = []
         },
         [getProducts.pending]: (state, _) => {
             state.loading = true;
@@ -73,12 +73,12 @@ const productSlice = createSlice({
             state.loading = false;
             state.totalDoc = action.payload.result.totalDoc;
             state.totalPage = action.payload.result.totalPage;
-            state.categories = action.payload.result.data;
+            state.products = action.payload.result.data;
             state.params = action.payload.params;
         },
         [getProducts.rejected]: (state) => {
             state.loading = false;
-            state.categories = [];
+            state.products = [];
         },
         [getProduct.pending]: (state, _) => {
             state.selectLoading = true;

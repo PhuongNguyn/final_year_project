@@ -43,8 +43,8 @@ export default function Footer() {
       >
         &copy; {1900 + new Date().getYear()},{" "}
         <Text as="span">{"Phần mêm quản lý website "}</Text>
-        <Link color="teal.400" href="https://cuabien.vn" target="_blank">
-          Cuabien.vn
+        <Link color="teal.400" href="" target="_blank">
+          Course Admin
         </Link>
       </Text>
     </Flex>

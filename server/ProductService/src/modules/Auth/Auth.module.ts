@@ -11,7 +11,7 @@ import { join } from 'path';
         name: 'USER_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'user-service:8101',
+          url: 'user-services:8101',
           package: 'user',
           protoPath: join(__dirname, '../../proto/user.proto'),
         },
@@ -22,4 +22,4 @@ import { join } from 'path';
   providers: [AuthService],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
