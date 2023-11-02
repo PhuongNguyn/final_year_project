@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { toSlug } from "../utils"
 
-const Category = ({image, category}) => {
+const Category = ({ image, category }) => {
   return (
-    <Link to = {`/category/${category}`}>
+    <Link to={`/category/${toSlug(category)}`}>
       <CategoryItemWrapper className='flex flex-column bg-alice-blue'>
         <div className='category-item-img'>
-          <img src = {image} alt = {category} />
+          <img src={image} alt={category} />
         </div>
         <div className='category-item-name'>
           <h6>{category}</h6>

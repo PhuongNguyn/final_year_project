@@ -5,6 +5,7 @@ import productReducer from "@/views/Product/store";
 import categoryReducer from "@/views/Categories/store";
 import unitReducer from "@/views/Ecommerce/Products/Unit/store";
 import warehouseReducer from "@/views/Warehouse/store";
+import lessonReducer from '@/views/ProductDetail/store'
 
 const rootReducer = {
   auth: authReducer,
@@ -14,6 +15,7 @@ const rootReducer = {
   categories: categoryReducer,
   units: unitReducer,
   warehouses: warehouseReducer,
+  lessons: lessonReducer
 };
 
 export default rootReducer;

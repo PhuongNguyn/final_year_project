@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import Course from "./Course";
 import { PYTHON, WEB_DEVELOPMENT, DATA_SCIENCE, AWS, DESIGN, MARKETING } from "../utils/constants";
 import courses from '../utils/data';
+import APIService from '../services';
+import { useDispatch } from 'react-redux';
+import { changeLoadingState } from '../redux/slice/theme.slice';
 
 const Tabs = ({ categories }) => {
   const [activeTab, setActiveTab] = useState(categories?.[0]?.id || "");
@@ -10,6 +13,31 @@ const Tabs = ({ categories }) => {
   const tabHandler = (category) => {
     setActiveTab(category);
   }
+
+  const dispatch = useDispatch()
+
+  const getNewestCourseByCate = async () => {
+    try {
+      dispatch(changeLoadingState(true))
+      console.log(categories?.find(item => item.id == activeTab))
+      const api = new APIService()
+      const reuslt = await api.getCourseByCate(categories?.find(item => item.id == activeTab)?.slug)
+      setCourses(reuslt.data?.result?.data)
+
+    } catch (error) {
+      console.log(error)
+    } finally {
+      dispatch(changeLoadingState(false))
+    }
+  }
+
+  useEffect(() => {
+    setActiveTab(categories?.[0]?.id)
+  }, [categories])
+
+  useEffect(() => {
+    getNewestCourseByCate()
+  }, [activeTab])
 
   return (
     <TabsWrapper>
@@ -22,7 +50,7 @@ const Tabs = ({ categories }) => {
 
         <div className='tabs-body'>
           {
-            courses.filter(course => course.category === activeTab).map((course) => (
+            courses?.map((course) => (
               <Course key={course.id} {...course} />
             ))
           }

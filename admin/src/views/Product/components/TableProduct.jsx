@@ -52,6 +52,7 @@ import moment from "moment";
 import Loading from "@/components/Loading";
 import { useDispatch } from "react-redux";
 import { getProduct } from "../store";
+import AlertDelete from "./AlertDelete";
 // import AlertDelete from "./AlertDelete";
 
 const status = {
@@ -316,7 +317,7 @@ const TableProduct = ({
                                                             <Flex direction={{ sm: "column", md: "row" }}>
                                                                 <Tooltip
                                                                     hasArrow
-                                                                    label="Chỉnh sửa danh mục"
+                                                                    label="Chỉnh sửa khoá học"
                                                                     placement="top"
                                                                 >
                                                                     <Button
@@ -338,7 +339,7 @@ const TableProduct = ({
                                                                 </Tooltip>
                                                                 <Tooltip
                                                                     hasArrow
-                                                                    label="Xóa danh mục"
+                                                                    label="Xóa khoá học"
                                                                     placement="top"
                                                                 >
                                                                     <Button
@@ -511,7 +512,7 @@ const TableProduct = ({
                 </Card>
             )}
             <ModalAddEdit onClose={handleCloseModal} isOpen={isOpenAdd} />
-            {/* <AlertDelete onClose={handleCloseDelete} isOpen={isOpenDelete} /> */}
+            <AlertDelete onClose={handleCloseDelete} isOpen={isOpenDelete} />
         </>
     );
 };

@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from "styled-components";
-import {MdClose} from "react-icons/md";
-import {Link} from "react-router-dom";
+import { MdClose } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { useSidebarContext } from '../context/sidebar_context';
 import { useCoursesContext } from '../context/courses_context';
+import { toSlug } from '../utils';
 
 const Sidebar = () => {
-  const {categories} = useCoursesContext();
-  const {closeSidebar, isSidebarOpen} = useSidebarContext();
+  const { categories } = useCoursesContext();
+  const { closeSidebar, isSidebarOpen } = useSidebarContext();
 
   return (
     <SidebarWrapper className={`bg-white ${isSidebarOpen ? "show-sidebar" : ""}`}>
-      <button type = "button" className='sidebar-close-btn' onClick={() => closeSidebar()}>
+      <button type="button" className='sidebar-close-btn' onClick={() => closeSidebar()}>
         <MdClose />
       </button>
       <div className='sidebar-content'>
@@ -20,8 +21,8 @@ const Sidebar = () => {
           {
             categories.map((category, idx) => {
               return (
-                <li className='sidebar-link-item fw-5' key = {idx}>
-                  <Link to = {`category/${category}`}>{category.toUpperCase()}</Link>
+                <li className='sidebar-link-item fw-5' key={idx}>
+                  <Link to={`category/${toSlug(category)}`}>{category.toUpperCase()}</Link>
                 </li>
               )
             })

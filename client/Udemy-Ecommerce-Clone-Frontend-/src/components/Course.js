@@ -3,32 +3,36 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import StarRating from "../components/StarRating";
 import { useCartContext } from '../context/cart_context';
+import { formatMoney } from '../utils';
 
 const Course = (props) => {
-  const { id, image, course_name, creator, actual_price, discounted_price, rating_count, rating_star, category } = props;
+  const { id, thumbnail, title, category, price, fakePrice, slug } = props;
   const { addToCart } = useCartContext();
+
+  const rating = Math.round(Math.random() * 10 / 2, 2)
+  const ratingCount = Math.round(Math.random() * 100, 2)
 
   return (
     <CourseCard>
       <div className='item-img'>
-        <img src={image} alt={course_name} />
+        <img src={thumbnail} alt={title} />
       </div>
       <div className='item-body'>
-        <h5 className='item-name'>{course_name}</h5>
-        <span className='item-creator'>{creator}</span>
-        <div className='item-rating flex' style={{ alignItems: 'start' }}>
-          <span className='rating-star-val'>{rating_star}</span>
-          <StarRating rating_star={rating_star} />
-          <span className='rating-count'>({rating_count})</span>
-        </div>
+        <h5 className='item-name'>{title}</h5>
+        <span className='item-creator'>{"Admin"}</span>
+        {/* <div className='item-rating flex' style={{ alignItems: 'start' }}>
+          <span className='rating-star-val'>{rating}</span>
+          <StarRating rating_star={rating} />
+          <span className='rating-count'>({ratingCount})</span>
+        </div> */}
         <div className='item-price'>
-          <span className='item-price-new'>${discounted_price}</span>
-          <span className='item-price-old'>${actual_price}</span>
+          <span className='item-price-new'>{formatMoney(price)}</span>
+          <span className='item-price-old'>{formatMoney(fakePrice)}</span>
         </div>
       </div>
       <div className='item-btns flex'>
-        <Link to={`/courses/${id}`} className="item-btn see-details-btn">See details</Link>
-        <Link to="/cart" className='item-btn add-to-cart-btn' onClick={() => addToCart(id, image, course_name, creator, discounted_price, category)}>Add to cart</Link>
+        <Link to={`/courses/${slug}`} className="item-btn see-details-btn">See details</Link>
+        <p className='item-btn add-to-cart-btn' >Add to cart</p>
       </div>
     </CourseCard>
   )

@@ -2,6 +2,36 @@ import { course_images } from "./images";
 
 const courses = [
     {
+        id: "xJB-WU",
+        category: "javascript",
+        image: course_images.python_1,
+        course_name: "Python Beyond the Basics - Object-Oriented Programming",
+        description: "From Classes To Inheritance - OOP In-Depth For Python Programmers",
+        rating_count: 2941,
+        rating_star: 4.2,
+        students: 10450,
+        creator: "Infinite Skills",
+        updated_date: "9/2019",
+        lang: "english",
+        actual_price: 49.99,
+        discounted_price: 10.99,
+        what_you_will_learn: [
+            "Design Reusable Object-Oriented Python Classes",
+            "How to handle Errors",
+            "Work with Python file handling",
+            "Apply OOP Concepts to handle complexity"
+        ],
+        content: [
+            "Introduction to Object Oriented Python",
+            "Classes",
+            "Inhertiance and Polymorphism",
+            "Advanced Features",
+            "Object Serialization",
+            "Efficiency and testing",
+            "Conclusion"
+        ]
+    },
+    {
         id: "xMHCZl",
         category: "python",
         image: course_images.python_5,
@@ -146,6 +176,7 @@ const courses = [
             "Conclusion"
         ]
     },
+
     {
         id: "qjdYG4",
         category: "web development",

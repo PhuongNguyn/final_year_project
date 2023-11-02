@@ -55,4 +55,6 @@ export const SELECT_PAGING_PRODUCT_CONSTANT = {
   updatedAt: true,
   category: SELECT_SINGLE_CATEGORY,
   thumbnail: true,
+  price: true,
+  fakePrice: true
 };

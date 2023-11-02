@@ -152,6 +152,7 @@ export class ProductController {
         result: result,
       });
     } catch (error) {
+      console.log(error)
       return Response({
         statusCode: RESPONSE_STATUS.FAILED,
         message: error,
@@ -162,9 +163,16 @@ export class ProductController {
   @Delete('/:id')
   async delete(@Param('id') id: number) {
     try {
-      return Response({
-        statusCode: RESPONSE_STATUS.SUCCESS,
-      });
+      const result = await this.productService.deleteProduct(id)
+
+      if (result) {
+        return Response({
+          statusCode: RESPONSE_STATUS.SUCCESS,
+        });
+      } else {
+        throw new Error("Xoá thất bại")
+      }
+
     } catch (error) {
       return Response({
         statusCode: RESPONSE_STATUS.FAILED,

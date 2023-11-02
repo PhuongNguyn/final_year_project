@@ -15,22 +15,12 @@ export class CreateProductDTO {
 }
 
 export class UpdateProductDTO {
-  name: string;
+  title: string;
   slug: string;
   description: string;
-  content: string;
-  categoryId: number;
-  basePrice: number;
+  category: number;
+  fakePrice: number;
   //OPTIONAL
-  price: [{ price: number; unitId: number; id: number }];
-  quantity: [{ quantity: number; unitId: number; id: number }];
-  file: [{ link: string; name: string; role: string; description: string }];
-  detail: {
-    parameter: [
-      {
-        key: string;
-        value: string;
-      },
-    ];
-  };
+  price: number
+  thumbnail: string
 }

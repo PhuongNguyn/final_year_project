@@ -77,7 +77,7 @@ export class ProductService extends BaseService<Product> {
       const category = await this.cateService.getCategoryBySlug(slug);
       if (category.success) {
         searchQuery = {
-          category: category.data.id,
+          category: { id: category.data.id },
         };
       } else {
         return { success: false, message: 'Chuyên mục không tồn tại!' };
@@ -89,12 +89,13 @@ export class ProductService extends BaseService<Product> {
           name: `%${search}%`,
         };
       }
+      console.log(searchQuery)
 
       const [data, totalDocs] = await this.productReponsitory.findAndCount({
         where: { ...searchQuery },
         skip: pageSize * pageIndex - pageSize,
         take: pageSize,
-        relations: ['category', 'price', 'price.unit'],
+        relations: ['category'],
         order: {
           createdAt: 'DESC',
         },
@@ -180,11 +181,33 @@ export class ProductService extends BaseService<Product> {
   }
 
   async getById(id: number) {
+    try {
+      const result = await this.productReponsitory.findOne({ where: { id }, relations: ['category'] })
 
+      return result
+    } catch (error) {
+      throw error
+    }
   }
 
   async getBySlug(slug: string) {
+    try {
+      const result = await this.productReponsitory.findOne({ where: { slug }, relations: ['category'] })
 
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async deleteProduct(id: number) {
+    try {
+      const result = await this.productReponsitory.delete({ id })
+
+      return result.affected > 0 ? true : false
+    } catch (error) {
+      throw error
+    }
   }
 
   async create(data: CreateProductDTO) {
@@ -201,7 +224,12 @@ export class ProductService extends BaseService<Product> {
   }
 
   async update(id: number, data: UpdateProductDTO) {
-
+    try {
+      const result = await this.productReponsitory.save({ ...data, category: [{ id: data.category }], id })
+      return result
+    } catch (error) {
+      throw error
+    }
   }
 
   async getByCategorySlug({

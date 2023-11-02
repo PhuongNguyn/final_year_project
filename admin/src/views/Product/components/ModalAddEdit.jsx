@@ -61,12 +61,11 @@ const ModalAddEdit = ({ onClose, isOpen }) => {
     };
 
     const handleSubmit = async (value, { setSubmitting }) => {
-        console.log(value)
         try {
             setSubmitting(true);
             const api = new APIService();
             if (selectedProduct) {
-                const res = await api.updateCategories(selectedProduct?.id, value);
+                const res = await api.updateProduct(selectedProduct?.id, value);
                 if (res.data.status == 1) {
                     toast({ title: "Cập nhật khoá học thành công", status: "success" });
                     onClose();
@@ -326,7 +325,7 @@ const ModalAddEdit = ({ onClose, isOpen }) => {
                                         <Field name="thumbnail">
                                             {({ field, form }) => (
                                                 <FormControl
-                                                    isInvalid={form.errors.image && form.touched.image}
+                                                    isInvalid={form.errors.thumbnail && form.touched.thumbnail}
                                                 >
                                                     <FormLabel
                                                         fontWeight="semibold"
@@ -337,7 +336,7 @@ const ModalAddEdit = ({ onClose, isOpen }) => {
                                                     </FormLabel>
                                                     <SingleUpload backgroundImage={'/images/bdlw_d4li_220404.jpg'}  {...field} setFieldValue={setFieldValue} />
                                                     <FormErrorMessage>
-                                                        {form.errors.image}
+                                                        {form.errors.thumbnail}
                                                     </FormErrorMessage>
                                                 </FormControl>
                                             )}

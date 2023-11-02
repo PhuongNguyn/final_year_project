@@ -17,7 +17,7 @@ export const getProduct = createAsyncThunk(
     "products/getProduct",
     async (id) => {
         if (id) {
-            const res = await api.getCategory(id);
+            const res = await api.getProduct(id);
 
             return res.data.result;
         } else {
@@ -85,11 +85,11 @@ const productSlice = createSlice({
         },
         [getProduct.fulfilled]: (state, action) => {
             state.selectLoading = false;
-            state.selectedCategory = action.payload;
+            state.selectedProduct = action.payload;
         },
         [getProduct.rejected]: (state) => {
             state.selectLoading = false;
-            state.selectedCategory = null;
+            state.selectedProduct = null;
         },
     },
 });

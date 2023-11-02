@@ -147,6 +147,10 @@ export default class APIService {
     return instance.delete(`/products/product/${id}`);
   }
 
+  updateProduct(id, value) {
+    return instance.put(`/products/product/${id}`, value)
+  }
+
   uploadFile(data) {
     return instance.post(`/file`, data);
   }
@@ -165,5 +169,9 @@ export default class APIService {
 
   editWarehouse(id, data) {
     return instance.put(`/products/warehouse/${id}`, data)
+  }
+
+  deleteLesson(id) {
+    return instance.delete(`/products/lesson/${id}`)
   }
 }

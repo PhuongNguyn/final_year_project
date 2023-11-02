@@ -36,7 +36,7 @@ const SingleUpload = ({ setFieldValue, backgroundImage, ...props }) => {
   const controls = useAnimation();
   const startAnimation = () => controls.start("hover");
   const stopAnimation = () => controls.stop();
-  const [image, setImage] = useState(backgroundImage);
+  const [image, setImage] = useState(props.value || backgroundImage);
   const [loading, setLoading] = useState(false);
 
   const handleChangeImage = async (e) => {

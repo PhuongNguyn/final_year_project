@@ -55,4 +55,13 @@ export default class APIService {
     async getCategoryHome() {
         return instance.get('/products/categories/getCateHome')
     }
+
+    // course 
+    async getCourseByCate(slug, pageSize = 10, pageIndex = 1, search = "") {
+        return instance.get(`/products/product/getByCateSlug?slug=${slug}&pageSize=${pageSize}&pageIndex=${pageIndex}&search=${search}`)
+    }
+
+    async getCourseBySlug(slug) {
+        return instance.get(`/products/product/getBySlug/${slug}`)
+    }
 }
