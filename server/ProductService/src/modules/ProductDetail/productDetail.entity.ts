@@ -15,6 +15,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Product } from '../ProductModule/product.entity';
+import { User } from '../UserModule/user.entity';
+
 
 interface dataType {
   key: number;
@@ -26,34 +28,27 @@ interface dataType {
 export class ProductDetail extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ type: String })
-  name: string;
-
-  @Column({ type: String })
-  videoUrl: string
-
-  @Column({ type: Number, default: 0 })
-  liked: number;
-
-  @Column({ type: Number, default: 0 })
-  view: number;
-
-  @Column({ type: Number, default: 0 })
-  rated: number;
-
-  @Column({ type: Number, default: 0 })
-  ordered: number;
-
-  @ManyToOne((type) => Product, (product) => product.id, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'product' })
+  @Column({Number})
+  order: number;
+  @Column({Boolean})
+  isFree: boolean;
+  @Column({String})
+  description: string;
+  @Column({String})
+  content: string;
+  @Column({String})
+  videoUrl: string;
+ // Product
+  @ManyToOne(() => Product, (product) => product.productDetails)
+  @JoinColumn({ name: 'productId' })
   product: Product;
+  @UpdateDateColumn({
+  type: 'timestamptz',
+})
+createdAt: Date;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+@UpdateDateColumn({
+  type: 'timestamptz',
+})
+updatedAt: Date;
 }
