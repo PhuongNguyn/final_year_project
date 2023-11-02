@@ -13,51 +13,49 @@ export class ProductDetailService extends BaseService<ProductDetail> {
   ) {
     super(detailReponsitory);
   }
-
-  async createOrUpdateDetails(productId: number, data: any) {
+  async createDetail(body: any) {
     try {
-      await this.detailReponsitory.upsert({ ...data, productId }, [
-        'productId',
-      ]);
-    } catch (error) { }
+      const result = await this.detailReponsitory.save(body);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
-
-  async updateView(productId: number, view: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        view: !isNaN(view) ? view : 1,
-      },
-      ['productId'],
-    );
+  async updateDetail(id: number, body: any) {
+    try {
+      const result = await this.detailReponsitory.update(id, body);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
-
-  async updateLiked(productId: number, liked: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        liked: !isNaN(liked) ? liked : 1,
-      },
-      ['productId'],
-    );
+  async deleteDetail(id: number) {
+    try {
+      const result = await this.detailReponsitory.delete(id);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
-
-  async updateRated(productId: number, rated: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        rated: !isNaN(rated) ? rated : 1,
-      },
-      ['productId'],
-    );
+  async getDetailById(id: number) {
+    try {
+      const result = await this.detailReponsitory.findOne({
+        where: { id: id },
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
-  async updateOrdered(productId: number, ordered: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        ordered: !isNaN(ordered) ? ordered : 1,
-      },
-      ['productId'],
-    );
-  }
+  // async getDetailByProductId(productId: number) {
+  //   try {
+  //     const result = await this.detailReponsitory.find({
+  //       where: { product.: productId },
+  //     });
+  //     return result;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 }
+
