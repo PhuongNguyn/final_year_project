@@ -87,4 +87,15 @@ export class ProductDetailService extends BaseService<ProductDetail> {
       throw error
     }
   }
+  // async getDetailByProductId(productId: number) {
+  //   try {
+  //     const result = await this.detailReponsitory.find({
+  //       where: { product.: productId },
+  //     });
+  //     return result;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 }
+

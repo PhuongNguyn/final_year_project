@@ -16,6 +16,7 @@ import {
 } from 'typeorm';
 import { Product } from '../ProductModule/product.entity';
 
+
 interface dataType {
   key: number;
   value: string;
@@ -50,10 +51,13 @@ export class ProductDetail extends BaseEntity {
   })
   @JoinColumn({ name: 'product' })
   product: Product;
+  @UpdateDateColumn({
+  type: 'timestamptz',
+})
+createdAt: Date;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+@UpdateDateColumn({
+  type: 'timestamptz',
+})
+updatedAt: Date;
 }
