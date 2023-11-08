@@ -17,7 +17,7 @@ import { getLessons } from "../store";
 
 const AlertDelete = ({ isOpen, onClose }) => {
     const { selectedLesson, selectLoading, params } = useSelector(
-        (state) => state.categories
+        (state) => state.lessons
     );
 
     const dispatch = useDispatch();
@@ -30,17 +30,10 @@ const AlertDelete = ({ isOpen, onClose }) => {
             const api = new APIService();
 
             const res = await api.deleteLesson(selectedLesson?.id);
-            if (res?.data?.status === 1) {
-                toast({ title: "Xóa bài học thành công", status: "success" });
-                dispatch(getLessons(params));
-                onClose();
-            } else {
-                toast({
-                    title: "Xóa bài học thất bại",
-                    description: error.response?.data?.message,
-                    status: "error",
-                });
-            }
+            toast({ title: "Xóa bài học thành công", status: "success" });
+            dispatch(getLessons(params));
+            onClose();
+
         } catch (error) {
             toast({
                 title: "Xóa bài học thất bại",

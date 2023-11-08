@@ -28,9 +28,9 @@ export const getProduct = createAsyncThunk(
 
 export const getAllProduct = createAsyncThunk("product/getAllProduct", async (state) => {
     try {
-        const result = await api.getAllCategory()
+        const result = await api.getProducts(10000000, 1)
         if (result.data?.status == 1) {
-            return result.data?.result
+            return result.data?.result.data
         } else {
             return []
         }

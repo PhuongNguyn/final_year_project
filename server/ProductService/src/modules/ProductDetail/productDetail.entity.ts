@@ -31,19 +31,19 @@ export class ProductDetail extends BaseEntity {
   name: string;
 
   @Column({ type: String })
+  slug: string;
+
+  @Column({ type: String })
+  description: string
+
+  @Column({ type: String })
   videoUrl: string
 
   @Column({ type: Number, default: 0 })
-  liked: number;
-
-  @Column({ type: Number, default: 0 })
-  view: number;
-
-  @Column({ type: Number, default: 0 })
-  rated: number;
-
-  @Column({ type: Number, default: 0 })
   ordered: number;
+
+  @Column({ type: Boolean, default: false })
+  isFree: boolean
 
   @ManyToOne((type) => Product, (product) => product.id, {
     onDelete: 'CASCADE',

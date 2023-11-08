@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
 
 import { ProductDetail } from './productDetail.entity';
+import { IProductDetail } from './ProductDetailDTO';
 
 @Injectable()
 export class ProductDetailService extends BaseService<ProductDetail> {
@@ -14,50 +15,76 @@ export class ProductDetailService extends BaseService<ProductDetail> {
     super(detailReponsitory);
   }
 
-  async createOrUpdateDetails(productId: number, data: any) {
+  async deleteLesson(id: number) {
     try {
-      await this.detailReponsitory.upsert({ ...data, productId }, [
-        'productId',
-      ]);
-    } catch (error) { }
+      const result = await this.detailReponsitory.delete({ id })
+
+      return result
+    } catch (error) {
+      throw error
+    }
   }
 
-  async updateView(productId: number, view: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        view: !isNaN(view) ? view : 1,
-      },
-      ['productId'],
-    );
+  async getLesson(id: number) {
+    try {
+      const result = await this.detailReponsitory.findOne({ where: { id }, relations: { product: true } })
+
+      return result
+    } catch (error) {
+      throw error
+    }
   }
 
-  async updateLiked(productId: number, liked: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        liked: !isNaN(liked) ? liked : 1,
-      },
-      ['productId'],
-    );
+  async createLesson(data: IProductDetail) {
+    try {
+      const { productId, isFree, ...submitData } = data
+      let convertToIsFree = isFree == "true" ? true : false
+
+      const result = this.detailReponsitory.create({ isFree: convertToIsFree, product: { id: productId }, ...submitData })
+      await result.save()
+
+      return result
+    } catch (error) {
+      throw error
+    }
   }
 
-  async updateRated(productId: number, rated: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        rated: !isNaN(rated) ? rated : 1,
-      },
-      ['productId'],
-    );
+  async updateLesson(id: number, data: IProductDetail) {
+    try {
+      const { productId, isFree, ...submitData } = data
+      let convertToIsFree = isFree == "true" || isFree == true ? true : false
+      console.log(data)
+      const result = await this.detailReponsitory.update({ id }, { isFree: convertToIsFree, product: { id: productId }, ...submitData })
+
+      return result
+    } catch (error) {
+      throw error
+    }
   }
-  async updateOrdered(productId: number, ordered: number) {
-    const data = await this.detailReponsitory.upsert(
-      {
-        product: { id: productId },
-        ordered: !isNaN(ordered) ? ordered : 1,
-      },
-      ['productId'],
-    );
+
+  async getPagingLesson(pageSize: number, pageIndex: number, search: string) {
+    try {
+      const result = await this.detailReponsitory.find({ relations: { product: true }, skip: pageSize * pageIndex - pageSize, take: pageSize })
+      const count = await this.detailReponsitory.count()
+      const totalPage = Math.ceil(count / pageSize)
+
+      return {
+        lessons: result,
+        count,
+        totalPage
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getLessonsByCourse(id: number) {
+    try {
+      const result = await ProductDetail.find({ where: { product: { id } }, order: { ordered: 1 }, relations: { product: true } })
+
+      return result
+    } catch (error) {
+      throw error
+    }
   }
 }

@@ -9,19 +9,11 @@ export const permissionSubject = {
   },
   product: {
     key: "product",
-    label: "Quản lí sản phẩm",
+    label: "Quản lí khoá học",
   },
   category: {
     key: "category",
     label: "Quản lí danh mục",
-  },
-  unit: {
-    key: "unit",
-    label: "Quản lí đơn vị tính",
-  },
-  warehouse: {
-    key: "warehouse",
-    label: "Quản lí kho hàng",
   },
 };
 

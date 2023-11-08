@@ -39,7 +39,7 @@ const Navbar = () => {
             {!user && <Link to={'/sign-up'}><div className='button-sign-up border-thin-solid-black text-white fw-6 fs-14'>
               Đăng kí
             </div></Link>}
-            {user && <Menu><MenuButton fontSize={'12px'}><Avatar src={user.avatar || DEFAULT_AVATAR} /></MenuButton><MenuList>
+            {user && <Menu><MenuButton fontSize={'12px'}><Avatar src={user.avatar || DEFAULT_AVATAR} /></MenuButton><MenuList zIndex={10}>
               <MenuItem><Link to={'/user-profile'} style={{ fontSize: '15px', cursor: 'pointer' }}>User Profile</Link></MenuItem>
               <MenuItem><Link to={'/#'} style={{ fontSize: '15px', cursor: 'pointer' }}>My Learning</Link></MenuItem>
               <MenuItem style={{ fontSize: '15px', cursor: 'pointer' }} onClick={handleLogout}>Log out</MenuItem>

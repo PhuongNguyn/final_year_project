@@ -12,12 +12,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from './redux/slice/user.slice';
 import { getTokenFromLocalStorage, getUserFromLocalStorage } from './utils';
 import UserProfile from './pages/UserProfile';
+import Footer from './components/Footer';
 
 const Home = React.lazy(() => import("./pages/HomePage"))
 const SingleCourse = React.lazy(() => import("./pages/SingleCoursePage"))
 const Cart = React.lazy(() => import("./pages/CartPage"))
 const Courses = React.lazy(() => import("./pages/CoursesPage"))
-
 const Login = React.lazy(() => import("./pages/Login"))
 const SignUp = React.lazy(() => import("./pages/SignUp"))
 
@@ -47,6 +47,7 @@ function App() {
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/user-profile' element={<UserProfile />} />
         </Routes>
+        <Footer />
       </Suspense>
     </BrowserRouter>
   );

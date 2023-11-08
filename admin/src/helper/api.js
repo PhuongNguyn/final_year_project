@@ -172,6 +172,22 @@ export default class APIService {
   }
 
   deleteLesson(id) {
-    return instance.delete(`/products/lesson/${id}`)
+    return instance.delete(`/products/lessons/${id}`)
+  }
+
+  getPagingLessons(pageSize = 10, pageIndex = 1, search = "") {
+    return instance.get(`/products/lessons/getPaging?pageSize=${pageSize}&pageIndex=${pageIndex}&search=${search}`)
+  }
+
+  createLesson(data) {
+    return instance.post('/products/lessons', data)
+  }
+
+  getLesson(id) {
+    return instance.get(`/products/lessons/${id}`);
+  }
+
+  updateLesson(id, data) {
+    return instance.put(`/products/lessons/${id}`, data)
   }
 }

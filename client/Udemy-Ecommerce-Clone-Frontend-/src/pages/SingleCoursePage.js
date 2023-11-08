@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from "styled-components";
-import { useCoursesContext } from '../context/courses_context';
-import StarRating from '../components/StarRating';
 import { MdInfo } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import { FaShoppingCart } from "react-icons/fa";
 import { RiClosedCaptioningFill } from "react-icons/ri";
-import { BiCheck } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { useCartContext } from '../context/cart_context';
 import APIService from '../services';
 import moment from "moment"
 import { formatMoney } from '../utils';
 import { useDispatch } from 'react-redux';
 import { changeLoadingState } from '../redux/slice/theme.slice';
+import { Collapse } from 'react-collapse';
+import { AiFillPlayCircle } from 'react-icons/ai'
+import { useDisclosure } from '@chakra-ui/react';
+import ModalCourse from '../components/ModalCourse/ModalCourse';
 
 const SingleCoursePage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { id } = useParams();
   const [course, setCourse] = useState()
   const dispatch = useDispatch()
+  const [collapse, setCollapses] = useState([])
 
   const getCourse = async () => {
     try {
@@ -27,7 +28,12 @@ const SingleCoursePage = () => {
       const api = new APIService()
       const result = await api.getCourseBySlug(id)
       setCourse(result.data?.result)
-
+      setCollapses(result.data?.result?.lessons?.map(item => {
+        return {
+          ...item,
+          isOpen: false
+        }
+      }))
     } catch (error) {
       console.log(error)
     } finally {
@@ -35,16 +41,45 @@ const SingleCoursePage = () => {
     }
   }
 
+  const setCollapse = (id) => {
+    setCollapses(collapse.map(item => {
+      if (item.id == id) {
+        return {
+          ...item,
+          isOpen: !item.isOpen
+        }
+      } else {
+        return {
+          ...item,
+          isOpen: false
+        }
+      }
+    }))
+  }
+
+  const handleOpenModal = () => {
+    onOpen()
+  }
+
   useEffect(() => {
     getCourse()
   }, []);
 
-
   return (
     <SingleCourseWrapper>
+      <ModalCourse isOpen={isOpen} onClose={onClose} courses={course?.lessons?.filter(item => item.isFree) || []} />
       <div className='course-intro mx-auto grid'>
         <div className='course-img'>
-          <img src={course?.thumbnail} alt={course?.title} />
+          <div className='course-img-wrapper' onClick={onOpen}>
+            <img src={course?.thumbnail} alt={course?.title} />
+            {course?.thumbnail && <div className='blur-glass'>
+              <div>
+                <AiFillPlayCircle size={45} style={{ margin: '0 auto' }} />
+                <p className='fs-18 fw-7 mt-2'>Xem trước khoá học này</p>
+              </div>
+            </div>}
+          </div>
+
         </div>
         <div className='course-details'>
           <div className='course-category bg-white text-dark text-capitalize fw-6 fs-12 d-inline-block'>{course?.category.name}</div>
@@ -99,9 +134,15 @@ const SingleCoursePage = () => {
             {
               course?.lessons && course?.lessons?.map((contentItem, idx) => {
                 return (
-                  <li key={idx}>
-                    <span>{contentItem}</span>
-                  </li>
+                  <>
+                    <li key={idx} onClick={() => setCollapse(contentItem.id)}>
+                      <span>{contentItem.name}</span>
+                      <Collapse isOpened={collapse.find(item => item.id == contentItem.id)?.isOpen}>
+                        <p style={{ fontWeight: '500', fontSize: '15px', marginTop: '10px' }}>{contentItem.description}</p>
+                      </Collapse>
+                    </li>
+
+                  </>
                 )
               })
             }
@@ -131,8 +172,6 @@ const SingleCourseWrapper = styled.div`
 
     .course-head{
       font-size: 38px;
-      line-height: 1.2;
-      padding: 12px 0 0 0;
     }
     .course-para{
       padding: 12px 0;
@@ -187,6 +226,7 @@ const SingleCourseWrapper = styled.div`
         padding-top: 0;
       }
       .course-img{
+        padding-top: 15px;
         order: 2;
       }
     }

@@ -193,8 +193,8 @@ export class ProductService extends BaseService<Product> {
   async getBySlug(slug: string) {
     try {
       const result = await this.productReponsitory.findOne({ where: { slug }, relations: ['category'] })
-
-      return result
+      const lessons = await this.detailService.getLessonsByCourse(result.id)
+      return { ...result, lessons }
     } catch (error) {
       throw error
     }
