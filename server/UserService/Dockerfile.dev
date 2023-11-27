@@ -8,11 +8,11 @@ EXPOSE 8001
 EXPOSE 8101
 WORKDIR /app
 USER root
-COPY  package.json yarn.lock ./
-RUN yarn
+COPY  package.json ./
+RUN npm install -f
 COPY . .
 
-CMD yarn start:dev
+CMD npm run start:dev
 
 
 

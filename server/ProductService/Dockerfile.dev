@@ -7,8 +7,8 @@ RUN mkdir /app
 EXPOSE 8002
 WORKDIR /app
 USER root
-COPY  package.json yarn.lock ./
-RUN yarn
+COPY  package.json ./
+RUN npm install -f
 COPY . .
 
-CMD yarn start:dev
+CMD npm run start:dev

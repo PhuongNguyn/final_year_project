@@ -29,6 +29,7 @@
     "@nestjs/microservices": "^10.2.5",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^7.1.10",
+    "@nestjs/websockets":"^9.0.0",
     "@nestjs/typeorm": "^10.0.0",
     "@types/bcryptjs": "^2.4.2",
     "bcryptjs": "^2.4.3",
