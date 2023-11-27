@@ -13,6 +13,7 @@ import { login } from './redux/slice/user.slice';
 import { getTokenFromLocalStorage, getUserFromLocalStorage } from './utils';
 import UserProfile from './pages/UserProfile';
 import Footer from './components/Footer';
+import SocketProvider from './context/SocketProvider';
 
 const Home = React.lazy(() => import("./pages/HomePage"))
 const SingleCourse = React.lazy(() => import("./pages/SingleCoursePage"))
@@ -23,10 +24,9 @@ const SignUp = React.lazy(() => import("./pages/SignUp"))
 
 function App() {
   const { loading } = useSelector(state => state.themes)
+  const {user} = useSelector(state => state.users)
 
   const dispatch = useDispatch()
-
-
 
   useEffect(() => {
     dispatch(login({ user: getUserFromLocalStorage(), token: getTokenFromLocalStorage() }))
@@ -34,6 +34,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <SocketProvider token={getTokenFromLocalStorage()} user={user}>
       <Suspense fallback={<FallbackLoading />}>
         {loading && <Loading />}
         <Navbar />
@@ -49,6 +50,7 @@ function App() {
         </Routes>
         <Footer />
       </Suspense>
+      </SocketProvider>
     </BrowserRouter>
   );
 }
