@@ -14,6 +14,7 @@ import { getTokenFromLocalStorage, getUserFromLocalStorage } from './utils';
 import UserProfile from './pages/UserProfile';
 import Footer from './components/Footer';
 import SocketProvider from './context/SocketProvider';
+import PaymentSuccess from './pages/PaymentSucces';
 
 const Home = React.lazy(() => import("./pages/HomePage"))
 const SingleCourse = React.lazy(() => import("./pages/SingleCoursePage"))
@@ -41,12 +42,13 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path='/pay-result/:userId/:invoiceNumber' element={<PaymentSuccess />} />
           <Route path="/courses/:id" element={<SingleCourse />} />
           <Route path="/category/:category" element={<Courses />} />
           <Route path="/cart" element={<Cart />} />
           <Route path='/login' element={<Login />} />
           <Route path='/sign-up' element={<SignUp />} />
-          <Route path='/user-profile' element={<UserProfile />} />
+          {user && <><Route path='/user-profile' element={<UserProfile />} /></>}
         </Routes>
         <Footer />
       </Suspense>

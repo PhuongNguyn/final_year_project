@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCartContext } from '../context/cart_context';
 import styled from "styled-components";
 import CartItem from "../components/CartItem";
 import {MdClear} from "react-icons/md";
+import { useDispatch, useSelector } from 'react-redux';
+import Confirm from '../components/Confirm';
+import { clearCart } from '../redux/slice/cart.slice';
+import { formatMoney } from '../utils';
+import { Link, useNavigate } from 'react-router-dom';
+import APIService from '../services';
+import { useToast } from '@chakra-ui/react';
 
 const CartPage = () => {
-  const {cart: cartItems, total_items, total_amount, clearCart} = useCartContext();
+  const cart = useSelector(state => state.persistedReducer);
+  const [isOpenConfirm, setIsOpenConfirm] = useState(false)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const dispath = useDispatch()
+  const user = useSelector((state) => state.users)
+  const navigate = useNavigate()
+  const toast = useToast()
 
-  if(cartItems.length < 1){
+  useEffect(()=>{
+    let total = 0 
+    cart.products?.forEach(item => total+=item.price)
+    setTotalPrice(total)
+  },[cart?.products])
+
+  if(cart.products?.length < 1){
     return (
       <NotFoundWrapper>
         <div className='container'>No items found in the cart.</div>
@@ -15,8 +34,23 @@ const CartPage = () => {
     )
   }
 
+  const handleMomoPay = async () => {
+    try {
+      const api = new APIService()
+      const result = await api.momoPay({products: cart?.products, total: totalPrice})
+      if(result?.data?.resultCode == 0){
+        window.open(result.data?.payUrl, "_blank")
+        return;
+      }
+      toast({status: "error", title: "Có lỗi trong quá trình thanh toán"})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <CartWrapper>
+      <Confirm onConfirm = {()=>dispath(clearCart())} isOpen={isOpenConfirm} onClose={()=>setIsOpenConfirm(false)} title={"Xoá giỏ hàng"} description={"Bạn có muốn xoá toàn bộ giỏ hàng"}/>
       <div className='container'>
         <div className='cart-pg-title'>
           <h3>Shopping Cart</h3>
@@ -26,19 +60,19 @@ const CartPage = () => {
           <div className='cart-grid-left'>
             <div className='flex flex-wrap flex-between'>
               <div className='cart-count-info'>
-                <span className='fw-7 fs-18'>{total_items}</span> Course in Cart
+                <span className='fw-7 fs-18'>{cart.products?.length || 0}</span> Course in Cart
               </div>
               <button type = "button" className='cart-clear-btn flex fs-15 fw-6 text' onClick={() => clearCart()}>
                 <MdClear className='text-pink' />
-                <span className='d-inline-block text-pink'>Clear All</span>
+                <span className='d-inline-block text-pink' onClick={()=>setIsOpenConfirm(true)}>Clear All</span>
               </button>
             </div>
 
             <div className='cart-items-list grid'>
               {
-                cartItems.map(cartItem => {
+                cart.products.map(cartItem => {
                   return (
-                    <CartItem key = {cartItem.courseID} cartItem = {cartItem} />
+                    <CartItem key = {cartItem.id} cartItem = {cartItem} />
                   )
                 })
               }
@@ -49,8 +83,8 @@ const CartPage = () => {
           <div className='cart-grid-right'>
             <div className='cart-total'>
               <span className='d-block fs-18 fw-6'>Total:</span>
-              <div className='cart-total-value fw-8'>${total_amount.toFixed(2)}</div>
-              <button type = "button" className='checkout-btn bg-purple text-white fw-6'>Checkout</button>
+              <div className='cart-total-value fw-8'>{formatMoney(totalPrice)}</div>
+              {user?.user ? <button type = "button" className='checkout-btn bg-purple text-white fw-6' onClick={()=>handleMomoPay()}>Thanh toán</button> : <p className='mt-2 text-18'><Link to={`/login?from=cart`}>Đăng nhập</Link> để thanh toán</p>}
             </div>
           </div>
           {/* end of cart grid right */}

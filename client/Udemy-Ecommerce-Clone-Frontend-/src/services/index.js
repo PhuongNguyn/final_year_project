@@ -64,4 +64,16 @@ export default class APIService {
     async getCourseBySlug(slug) {
         return instance.get(`/products/product/getBySlug/${slug}`)
     }
+
+    async momoPay(data){
+        return instance.post('/products/invoices/momo', data)
+    }
+
+    async updatePayment(invoiceId, status){
+        return instance.put(`/products/invoices/pay-result/${invoiceId}`, {status})
+    }
+
+    async  getMyCourse(){
+        return instance.get('/products/invoices/my-course')
+    }
 }

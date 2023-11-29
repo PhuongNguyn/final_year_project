@@ -867,3 +867,127 @@ select {
 .single-course-item-active {
     background-color: rgb(89, 89, 89);
 }
+
+.check-wrapper {
+    border-radius: 200px;
+    height: 200px;
+    width: 200px;
+    background: #F8FAF5;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#payment-result {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+
+    & h1 {
+        color: #88B04B;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-weight: 900;
+        font-size: 40px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    & p {
+        color: #404F5E;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    & .icon-check {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left: -15px;
+    }
+
+    & .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+    }
+
+
+    & .order-fail{
+        color: red;
+    }
+
+    & .icon-fail{
+        color: red;
+    }
+}
+
+.profile-wrapper{
+    padding: 40px 0px;
+    box-sizing: border-box;
+}
+
+.sidebar-profile{
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    min-width: 300px;
+    min-height: 100vh;
+
+}
+
+.profile-page{
+    display: flex;
+}
+
+.content-profile{
+    border: 1px solid rgba(0,0,0,0.2);
+    flex: 1;
+}
+
+.content-profile-header{
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding: 15px 0px;
+    & h1{
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+.sidebar-profile-header{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & p{
+        margin-top: 15px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+
+.sidebar-profile-menu{
+
+    &-selected{
+        background-color: #6a6f73;
+        color: white;
+    }
+     & ul{
+        margin-top: 25px;
+        & li{
+            transition: 0.1s;
+            padding: 5px 15px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+     }
+}
+.user-info-wrapper{
+    padding: 10px 30px;
+}

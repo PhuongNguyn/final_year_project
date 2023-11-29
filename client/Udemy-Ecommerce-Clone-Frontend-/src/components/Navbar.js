@@ -16,6 +16,8 @@ const Navbar = () => {
   const { user } = useSelector(state => state.users)
   const dispatch = useDispatch()
 
+  const cart = useSelector((state) => state.persistedReducer)
+
   const handleLogout = () => {
     dispatch(logout())
   }
@@ -31,7 +33,7 @@ const Navbar = () => {
           <div className='navbar-btns flex gap-2'>
             <Link to="/cart" className='cart-btn'>
               <MdShoppingCart />
-              <span className='item-count-badge'>{total_items}</span>
+              <span className='item-count-badge'>{cart?.products?.length || 0}</span>
             </Link>
             {!user && <Link to={'/login'}><div className='button-login border-thin-solid-black text-black fw-6 fs-14'>
               Đăng nhập
@@ -40,8 +42,7 @@ const Navbar = () => {
               Đăng kí
             </div></Link>}
             {user && <Menu><MenuButton fontSize={'12px'}><Avatar src={user.avatar || DEFAULT_AVATAR} /></MenuButton><MenuList zIndex={10}>
-              <MenuItem><Link to={'/user-profile'} style={{ fontSize: '15px', cursor: 'pointer' }}>User Profile</Link></MenuItem>
-              <MenuItem><Link to={'/#'} style={{ fontSize: '15px', cursor: 'pointer' }}>My Learning</Link></MenuItem>
+              <MenuItem><Link to={'/user-profile'} style={{ fontSize: '15px', cursor: 'pointer' }}>My Learning</Link></MenuItem>
               <MenuItem style={{ fontSize: '15px', cursor: 'pointer' }} onClick={handleLogout}>Log out</MenuItem>
             </MenuList></Menu>}
             <button type="button" className='sidebar-open-btn' onClick={() => openSidebar()}>

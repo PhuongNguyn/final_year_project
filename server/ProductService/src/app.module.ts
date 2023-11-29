@@ -14,6 +14,7 @@ import { Category } from './modules/CategoryModule/categories.entity';
 import { ProductModule } from './modules/ProductModule/product.module';
 import { ProductDetailModule } from './modules/ProductDetail/productDetail.module';
 import { AuthModule } from './modules/Auth/Auth.module';
+import { InvoiceModule } from './modules/Invoice/invoice.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { AuthModule } from './modules/Auth/Auth.module';
     ProductModule,
     ProductDetailModule,
     AuthModule,
+    InvoiceModule
   ],
 })
 export class AppModule { }

@@ -14,13 +14,26 @@ import { Collapse } from 'react-collapse';
 import { AiFillPlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react';
 import ModalCourse from '../components/ModalCourse/ModalCourse';
+import { addProduct } from '../redux/slice/cart.slice';
 
 const SingleCoursePage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { id } = useParams();
   const [course, setCourse] = useState()
+  const [myCourse, setMyCourses] = useState([])
   const dispatch = useDispatch()
   const [collapse, setCollapses] = useState([])
+
+  const getUserCourse = async () => {
+    try {
+      const api = new APIService()
+      const result = await api.getMyCourse()
+      setMyCourses(result.data?.courses)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getCourse = async () => {
     try {
@@ -61,8 +74,13 @@ const SingleCoursePage = () => {
     onOpen()
   }
 
+  const checkIsBuy = () => {
+    return myCourse?.find(item => item.id == course.id)
+  }
+
   useEffect(() => {
     getCourse()
+    getUserCourse()
   }, []);
 
   return (
@@ -107,18 +125,18 @@ const SingleCoursePage = () => {
             </ul>
           </div>
 
-          <div className='course-foot'>
+          {!checkIsBuy() && <div className='course-foot'>
             <div className='course-price'>
               <span className='new-price fs-26 fw-8'>${formatMoney(course?.price)}</span>
               <span className='old-price fs-26 fw-6'>${formatMoney(course?.fakePrice)}</span>
             </div>
-          </div>
+          </div>}
 
-          <div className='course-btn'>
+          {!checkIsBuy() && <div className='course-btn' onClick={()=>dispatch(addProduct(course))}>
             <p to={'/#'} className='add-to-cart-btn d-inline-block fw-7 bg-purple'>
-              <div className='flex'><FaShoppingCart style={{ verticalAlign: '-2px' }} /> <span style={{ marginLeft: '5px' }}>Add to cart</span></div>
+              <div className='flex pointer'><FaShoppingCart style={{ verticalAlign: '-2px' }} /> <span style={{ marginLeft: '5px' }}>Add to cart</span></div>
             </p>
-          </div>
+          </div>}
         </div>
       </div>
 
@@ -138,7 +156,8 @@ const SingleCoursePage = () => {
                     <li key={idx} onClick={() => setCollapse(contentItem.id)}>
                       <span>{contentItem.name}</span>
                       <Collapse isOpened={collapse.find(item => item.id == contentItem.id)?.isOpen}>
-                        <p style={{ fontWeight: '500', fontSize: '15px', marginTop: '10px' }}>{contentItem.description}</p>
+                        <p style={{ fontWeight: '500', fontSize: '15px', marginTop: '10px', marginBottom: '20px' }}>{contentItem.description}</p>
+                        {checkIsBuy() && <iframe width="100%" height="500" src={`https://www.youtube.com/embed/${contentItem?.videoUrl}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>}
                       </Collapse>
                     </li>
 

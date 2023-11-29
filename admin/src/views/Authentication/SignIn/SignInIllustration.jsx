@@ -85,7 +85,6 @@ function SignIn() {
           style={{ userSelect: "none" }}
           w={{ base: "100%", md: "50%", lg: "42%" }}
         >
-          <Image src="/logo.png" w={250} h={250} />
           <Flex direction="column" w="100%" background="transparent" p="48px">
             <Heading color={titleColor} fontSize="32px" mb="10px">
               Đăng nhập

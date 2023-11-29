@@ -1,7 +1,7 @@
 import { useState } from "react"
 import InputWithFloatLabel from "../components/Form/InputWithFloatLabel"
-import { Link, useNavigate } from "react-router-dom"
-import { useToast } from "@chakra-ui/react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useQuery, useToast } from "@chakra-ui/react"
 import APIService from "../services"
 import { SUCCESS_STATUS } from "../utils/constants"
 import { useDispatch } from "react-redux"
@@ -12,6 +12,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const searchParams = new URLSearchParams(document.location.search)
     const toast = useToast()
     const navigate = useNavigate()
     const handleSubmitForm = async (e) => {
@@ -31,6 +32,10 @@ const Login = () => {
             if (result.data?.status == SUCCESS_STATUS) {
                 toast({ status: "success", title: "Đăng nhập thành công", position: "top" })
                 dispatch(loginAction({ user: result.data.result?.user, token: result.data.result?.accessToken }))
+                if(searchParams.get("from")){
+                    navigate(`/${searchParams.get("from")}`)
+                    return;
+                }
                 navigate('/')
             } else {
                 toast({ status: "success", title: "Đăng nhập thất bại", position: "top" })
@@ -50,6 +55,7 @@ const Login = () => {
     const handleChangePassword = (e) => {
         setPassword(e.target.value)
     }
+    console.log(searchParams.get("from"))
     return (
         <div className="">
             <div className="login-container mx-auto fs-16 fw-7">

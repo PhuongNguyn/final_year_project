@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import StarRating from "../components/StarRating";
 import { useCartContext } from '../context/cart_context';
 import { formatMoney } from '../utils';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/slice/cart.slice';
 
 const Course = (props) => {
   const { id, thumbnail, title, category, price, fakePrice, slug } = props;
-  const { addToCart } = useCartContext();
 
-  const rating = Math.round(Math.random() * 10 / 2, 2)
-  const ratingCount = Math.round(Math.random() * 100, 2)
+  const dispatch = useDispatch()
 
   return (
     <CourseCard>
@@ -32,7 +32,7 @@ const Course = (props) => {
       </div>
       <div className='item-btns flex'>
         <Link to={`/courses/${slug}`} className="item-btn see-details-btn">See details</Link>
-        <p className='item-btn add-to-cart-btn' >Add to cart</p>
+        <p className='item-btn add-to-cart-btn pointer' onClick={()=>dispatch(addProduct(props))}>Add to cart</p>
       </div>
     </CourseCard>
   )
