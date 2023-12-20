@@ -13,6 +13,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Product } from '../ProductModule/product.entity';
+import { ClassesEntity } from '../ClassesModule/classes.entity';
 
 @Entity({ name: 'categories' })
 export class Category extends BaseEntity {
@@ -44,6 +45,9 @@ export class Category extends BaseEntity {
 
   @ManyToMany(() => Product, (product) => product.category)
   products: Product[];
+
+  @ManyToMany(() => ClassesEntity, (product) => product.category)
+  classes: ClassesEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

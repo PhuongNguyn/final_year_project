@@ -35,6 +35,7 @@ const Wizard = lazy(() => import("./views/Applications/Wizard/index"));
 import SignInIllustration from "./views/Authentication/SignIn/SignInIllustration";
 import Product from "./views/Product";
 import ProductDetail from "./views/ProductDetail";
+import Classes from "./views/Classes";
 
 const CRM = lazy(() => import("./views/Dashboard/CRM"));
 const Default = lazy(() => import("./views/Dashboard/Default"));
@@ -113,6 +114,12 @@ const dashRoutes = [
         name: "Khoá học",
         path: "/products/products-list",
         component: Product,
+        layout: "/admin",
+      },
+      {
+        name: "Lớp học",
+        path: "/classes/class-list",
+        component: Classes,
         layout: "/admin",
       },
       {

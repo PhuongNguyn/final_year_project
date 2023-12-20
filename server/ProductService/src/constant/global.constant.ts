@@ -58,3 +58,18 @@ export const SELECT_PAGING_PRODUCT_CONSTANT = {
   price: true,
   fakePrice: true
 };
+
+export const SELECT_PAGING_CLASS_CONSTANT = {
+  id: true,
+  title: true,
+  slug: true,
+  description: true,
+  createdAt: true,
+  updatedAt: true,
+  category: SELECT_SINGLE_CATEGORY,
+  thumbnail: true,
+  price: true,
+  fakePrice: true,
+  startAt: true,
+  endAt: true,
+}
